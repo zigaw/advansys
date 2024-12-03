@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="app/app.js"></script>
+    <script src="app/services/userService.js"></script>
+    <script src="app/components/userDetails.js"></script>
+    <script src="app/components/modalPopup.js"></script>
+    <script src="app/directives/onLongPress.js"></script>
+    <script src="app/components/deleteConfirmation.js"></script>
+    <script src="app/controllers/mainController.js"></script>
+</head>
+<body ng-controller="MainController">
+<div class="container">
+    <h1>Company Employees</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID_USER</th>
+            <th>NAME</th>
+            <th>USERNAME</th>
+            <th>EMAIL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users" ng-class="{'table-active': selectedUser === user}" ng-click="selectUser(user)" on-long-press="onLongPress()">
+            <td>{{user.id}}</td>
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- User Details Modal -->
+<modal-popup show="!!selectedUser" on-close="closeModal()">
+    <user-details user="selectedUser"></user-details>
+    <button class="btn btn-danger mt-3" ng-click="confirmDelete(selectedUser)">
+        Delete User
+    </button>
+</modal-popup>
+
+<!-- Delete Confirmation Modal -->
+<delete-confirmation show="!!deleteCandidate" on-confirm="deleteUser()" on-cancel="cancelDelete()"></delete-confirmation>
+</body>
+</html>
